@@ -1,0 +1,30 @@
+
+@Restcontroller
+@RequestMapping("/employee")
+class EmployeeController {
+  @Autowired
+  private EmployeeService employeeService
+
+  @PostMapping("/save-employee")
+  public Employee saveEmployee(@RequestBody Employee employee){
+	employeeService.saveEmployee(employee);  
+  }
+   @GetMapping("/fetch-employee/{id}")
+  public Employee fetchEmployee(@PathVariable Long id){
+	employeeService.fetchEmployee(employee);  
+  }
+	
+}
+ 
+
+
+
+introduce yourself 
+advantages of spring boot
+write controller to save and get employee
+swap two numbers without using third variable
+what is session and sessionFactory
+what is hibernate
+how to handle large dataset in spring boot
+what is difference between page and slice
+what is spring mvc

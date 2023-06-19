@@ -1,0 +1,32 @@
+To Run docker image
+
+docker run -p 2200:22 -ti --rm ubuntu /bin/bash
+
+To install openssh server 
+
+apt install openssh-server
+
+To fetch all running services
+
+service --status-all
+
+To set password in ubuntu 
+passwd root
+root is root user
+
+
+apt install nano
+
+
+start ssh server
+
+service ssh start
+
+
+To send files on server using ssh
+
+scp -r -P 2200 .\target\mapping-of-entities-0.0.1-SNAPSHOT.jar  root@127.0.0.1:/home
+
+
+pscp -r -P 2200 .\target\mapping-of-entities-0.0.1-SNAPSHOT.jar  root@127.0.0.1:/home 
+scp .\target\mapping-of-entities-0.0.1-SNAPSHOT.jar root@127.0.0.1:2200:/home   

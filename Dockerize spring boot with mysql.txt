@@ -1,0 +1,51 @@
+		Docker Commands to Run spring boot with mysql
+
+1. docker pull mysql:5.7
+
+Pull's docker Image From Docker Hub to local Environment
+
+
+2. docker network create springboot-mysql-root
+			 <network_name>
+   docker network ls
+   To list down all the networks
+
+
+3. docker run --name mysqldb --network springboot-mysql-net -e MYSQL_ROOT_PASSWORD=root -e MYSQL_DATABASE=sampledb -e MYSQL_PASSWORD=root -d mysql:5.7
+   To run mysql container in network 
+
+
+4. To check the database 
+   docker exec -it <container_id> bash
+   mysql -u<username> -p<password>
+   now u can run the sql commands
+   mysql commands
+
+
+5. update the application.properties or application.yml file
+
+spring:
+  datasource:
+    url: jdbc:mysql://mysqldb:3306/sampledb?createDatabaseIfNotExist=true
+    password: root
+    username: root
+    driver-class-name: com.mysql.cj.jdbc.Driver
+
+
+6. docker build -t :latest .  
+   To build docker image
+
+
+7. docker run --network springboot-mysql-net --name springboot-container -p 9011:9011 -d mappingdemo
+   Start the spring boot container on the same network
+
+
+8. a) docker logs <container_id or container_name>
+   To check the logs of image
+   b) docker logs <container_id or container_name> -f
+      To stream the logs
+   c) docker logs <container_id or container_name> | tail
+      To print the logs from the tail/end
+
+
+   

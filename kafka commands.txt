@@ -1,0 +1,20 @@
+kafka command
+
+.\bin\windows\kafka-server-start.bat .\config\server.properties
+
+zookeeper command
+
+.\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
+
+
+docker run -it -p 9000:9000 -e KAFKA_BROKERCONNECT=10.0.61.193:9092   obsidiandynamics/kafdrop
+
+
+
+kafka list topic command
+
+bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
+
+kafka consumer 
+
+bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic user_aud

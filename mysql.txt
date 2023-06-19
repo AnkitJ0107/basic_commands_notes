@@ -1,0 +1,785 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 306
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show databases;
++--------------------+
+| Database           |
++--------------------+
+| breakfastcorner    |
+| information_schema |
+| jdbc_ankit         |
+| mysql              |
+| performance_schema |
+| sakila             |
+| sample             |
+| sys                |
+| world              |
++--------------------+
+9 rows in set (0.04 sec)
+
+mysql> use jdbc_ankit;
+Database changed
+mysql> show tables;
++----------------------+
+| Tables_in_jdbc_ankit |
++----------------------+
+| account              |
+| author               |
+| book                 |
+| developer            |
+| employee             |
+| neoemployee          |
+| neotrainer           |
+| storybook            |
+| trainer              |
+| user                 |
++----------------------+
+10 rows in set (0.01 sec)
+
+mysql> create table emp;
+ERROR 4028 (HY000): A table must have at least one visible column.
+mysql> create table emp(eid int, ename varchar(20),esal double);
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> alter table emp add eage int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe emp;
++-------+-------------+------+-----+---------+-------+
+| Field | Type        | Null | Key | Default | Extra |
++-------+-------------+------+-----+---------+-------+
+| eid   | int         | YES  |     | NULL    |       |
+| ename | varchar(20) | YES  |     | NULL    |       |
+| esal  | double      | YES  |     | NULL    |       |
+| eage  | int         | YES  |     | NULL    |       |
++-------+-------------+------+-----+---------+-------+
+4 rows in set (0.01 sec)
+
+mysql> alter table emp change esal esalary double;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe emp;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int         | YES  |     | NULL    |       |
+| ename   | varchar(20) | YES  |     | NULL    |       |
+| esalary | double      | YES  |     | NULL    |       |
+| eage    | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table emp change ename varchar(40);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar(40)' at line 1
+mysql> alter table emp change ename ename varchar(40);
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe emp;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int         | YES  |     | NULL    |       |
+| ename   | varchar(40) | YES  |     | NULL    |       |
+| esalary | double      | YES  |     | NULL    |       |
+| eage    | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table emp change ename ename varchar(20);
+Query OK, 0 rows affected (0.05 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> describe emp;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| eid     | int         | YES  |     | NULL    |       |
+| ename   | varchar(20) | YES  |     | NULL    |       |
+| esalary | double      | YES  |     | NULL    |       |
+| eage    | int         | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> insert into emp(eid,ename) values(101,'ankit');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++------+-------+---------+------+
+| eid  | ename | esalary | eage |
++------+-------+---------+------+
+|  101 | ankit |    NULL | NULL |
++------+-------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> update emp set esalary=10000,eage=22;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++------+-------+---------+------+
+| eid  | ename | esalary | eage |
++------+-------+---------+------+
+|  101 | ankit |   10000 |   22 |
++------+-------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> delete from emp;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
+Empty set (0.00 sec)
+
+mysql> insert into emp values(101,'ankit',10000,22);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++------+-------+---------+------+
+| eid  | ename | esalary | eage |
++------+-------+---------+------+
+|  101 | ankit |   10000 |   22 |
++------+-------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> insert into emp values(102,'Neeraj',22000,22),(103,'lokesh',24000,22);
+Query OK, 2 rows affected (0.01 sec)
+Records: 2  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++------+--------+---------+------+
+| eid  | ename  | esalary | eage |
++------+--------+---------+------+
+|  101 | ankit  |   10000 |   22 |
+|  102 | Neeraj |   22000 |   22 |
+|  103 | lokesh |   24000 |   22 |
++------+--------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> insert into emp values(102,'Neeraj',NUll,22);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++------+--------+---------+------+
+| eid  | ename  | esalary | eage |
++------+--------+---------+------+
+|  101 | ankit  |   10000 |   22 |
+|  102 | Neeraj |   22000 |   22 |
+|  103 | lokesh |   24000 |   22 |
+|  102 | Neeraj |    NULL |   22 |
++------+--------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> select distinct eage from emp;
++------+
+| eage |
++------+
+|   22 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp order by ename;
++------+--------+---------+------+
+| eid  | ename  | esalary | eage |
++------+--------+---------+------+
+|  101 | ankit  |   10000 |   22 |
+|  103 | lokesh |   24000 |   22 |
+|  102 | Neeraj |   22000 |   22 |
+|  102 | Neeraj |    NULL |   22 |
++------+--------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp order by ename desc;
++------+--------+---------+------+
+| eid  | ename  | esalary | eage |
++------+--------+---------+------+
+|  102 | Neeraj |   22000 |   22 |
+|  102 | Neeraj |    NULL |   22 |
+|  103 | lokesh |   24000 |   22 |
+|  101 | ankit  |   10000 |   22 |
++------+--------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp;
++------+--------+---------+------+
+| eid  | ename  | esalary | eage |
++------+--------+---------+------+
+|  101 | ankit  |   10000 |   22 |
+|  102 | Neeraj |   22000 |   22 |
+|  103 | lokesh |   24000 |   22 |
+|  102 | Neeraj |    NULL |   22 |
++------+--------+---------+------+
+4 rows in set (0.00 sec)
+
+mysql> alter table emp add hiredate date;
+Query OK, 0 rows affected (0.04 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++------+--------+---------+------+----------+
+| eid  | ename  | esalary | eage | hiredate |
++------+--------+---------+------+----------+
+|  101 | ankit  |   10000 |   22 | NULL     |
+|  102 | Neeraj |   22000 |   22 | NULL     |
+|  103 | lokesh |   24000 |   22 | NULL     |
+|  102 | Neeraj |    NULL |   22 | NULL     |
++------+--------+---------+------+----------+
+4 rows in set (0.00 sec)
+
+mysql> delete from emp where esalary=22000;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp;
++------+--------+---------+------+----------+
+| eid  | ename  | esalary | eage | hiredate |
++------+--------+---------+------+----------+
+|  101 | ankit  |   10000 |   22 | NULL     |
+|  103 | lokesh |   24000 |   22 | NULL     |
+|  102 | Neeraj |    NULL |   22 | NULL     |
++------+--------+---------+------+----------+
+3 rows in set (0.00 sec)
+
+mysql> update emp set hiredate='17-12-1990' ;
+ERROR 1292 (22007): Incorrect date value: '17-12-1990' for column 'hiredate' at row 1
+mysql> update emp set hiredate=17-12-1990 ;
+ERROR 1292 (22007): Incorrect date value: '-1985' for column 'hiredate' at row 1
+mysql> update emp set hiredate=17/12/1990 ;
+Query OK, 3 rows affected (0.01 sec)
+Rows matched: 3  Changed: 3  Warnings: 0
+
+mysql> update emp set hiredate=17/12/1980 where eid=102;
+Query OK, 0 rows affected (0.00 sec)
+Rows matched: 1  Changed: 0  Warnings: 0
+
+mysql> select * from emp;
++------+--------+---------+------+------------+
+| eid  | ename  | esalary | eage | hiredate   |
++------+--------+---------+------+------------+
+|  101 | ankit  |   10000 |   22 | 0000-00-00 |
+|  103 | lokesh |   24000 |   22 | 0000-00-00 |
+|  102 | Neeraj |    NULL |   22 | 0000-00-00 |
++------+--------+---------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update emp set hiredate=1990/08/13 where eid=102;
+ERROR 1292 (22007): Incorrect date value: '19.134615384615384615' for column 'hiredate' at row 3
+mysql> update emp set hiredate=1990/08/12 where eid=102;
+ERROR 1292 (22007): Incorrect date value: '20.729166666666666666' for column 'hiredate' at row 3
+mysql> update emp set hiredate=1990-08-12 where eid=102;
+ERROR 1292 (22007): Incorrect date value: '1970' for column 'hiredate' at row 3
+mysql> select * from emp;
++------+--------+---------+------+------------+
+| eid  | ename  | esalary | eage | hiredate   |
++------+--------+---------+------+------------+
+|  101 | ankit  |   10000 |   22 | 0000-00-00 |
+|  103 | lokesh |   24000 |   22 | 0000-00-00 |
+|  102 | Neeraj |    NULL |   22 | 0000-00-00 |
++------+--------+---------+------+------------+
+3 rows in set (0.00 sec)
+
+mysql> update emp set date=1980-12-17 where eid=101;
+ERROR 1054 (42S22): Unknown column 'date' in 'field list'
+mysql> update emp set hiredate=1980-12-17 where eid=101;
+ERROR 1292 (22007): Incorrect date value: '1951' for column 'hiredate' at row 1
+mysql> alter table emp change hiredate hiredate datetime;
+Query OK, 3 rows affected (0.04 sec)
+Records: 3  Duplicates: 0  Warnings: 0
+
+mysql> update emp set hiredate=1980-12-17 where eid=101;
+ERROR 1292 (22007): Incorrect datetime value: '1951' for column 'hiredate' at row 1
+mysql> select * from emp;
++------+--------+---------+------+---------------------+
+| eid  | ename  | esalary | eage | hiredate            |
++------+--------+---------+------+---------------------+
+|  101 | ankit  |   10000 |   22 | 0000-00-00 00:00:00 |
+|  103 | lokesh |   24000 |   22 | 0000-00-00 00:00:00 |
+|  102 | Neeraj |    NULL |   22 | 0000-00-00 00:00:00 |
++------+--------+---------+------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> update emp set hiredate='1980-12-17' where eid=101;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++------+--------+---------+------+---------------------+
+| eid  | ename  | esalary | eage | hiredate            |
++------+--------+---------+------+---------------------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 |
+|  103 | lokesh |   24000 |   22 | 0000-00-00 00:00:00 |
+|  102 | Neeraj |    NULL |   22 | 0000-00-00 00:00:00 |
++------+--------+---------+------+---------------------+
+3 rows in set (0.00 sec)
+
+mysql> update emp set hiredate='1990-12-17' where eid=102;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update emp set hiredate='1990-12-17' where eid=103;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> elect * from emp where date="1980-12-17";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'elect * from emp where date="1980-12-17"' at line 1
+mysql> elect * from emp where hiredate="1980-12-17";
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'elect * from emp where hiredate="1980-12-17"' at line 1
+mysql> select * from emp where hiredate="1980-12-17";
++------+-------+---------+------+---------------------+
+| eid  | ename | esalary | eage | hiredate            |
++------+-------+---------+------+---------------------+
+|  101 | ankit |   10000 |   22 | 1980-12-17 00:00:00 |
++------+-------+---------+------+---------------------+
+1 row in set (0.00 sec)
+
+mysql> alter table emp add job varchar(20);
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++------+--------+---------+------+---------------------+------+
+| eid  | ename  | esalary | eage | hiredate            | job  |
++------+--------+---------+------+---------------------+------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | NULL |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | NULL |
+|  102 | Neeraj |    NULL |   22 | 1990-12-17 00:00:00 | NULL |
++------+--------+---------+------+---------------------+------+
+3 rows in set (0.00 sec)
+
+mysql> update emp set job='manager' where eid=101;eid=10
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'eid=10' at line 1
+mysql> select * from emp;
++------+--------+---------+------+---------------------+---------+
+| eid  | ename  | esalary | eage | hiredate            | job     |
++------+--------+---------+------+---------------------+---------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | NULL    |
+|  102 | Neeraj |    NULL |   22 | 1990-12-17 00:00:00 | NULL    |
++------+--------+---------+------+---------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> update emp set job='manager' where eid=102;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> update emp set job='clerk' where eid=103;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++------+--------+---------+------+---------------------+---------+
+| eid  | ename  | esalary | eage | hiredate            | job     |
++------+--------+---------+------+---------------------+---------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | clerk   |
+|  102 | Neeraj |    NULL |   22 | 1990-12-17 00:00:00 | manager |
++------+--------+---------+------+---------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select avg(esalary) from emp group by job having job='manager';
++--------------+
+| avg(esalary) |
++--------------+
+|        10000 |
++--------------+
+1 row in set (0.01 sec)
+
+mysql> select avg(esalary) from emp group by job having job='manager' or job='clerk';
++--------------+
+| avg(esalary) |
++--------------+
+|        10000 |
+|        24000 |
++--------------+
+2 rows in set (0.00 sec)
+
+mysql> update emp set esalary=20000 where eid=102;
+Query OK, 1 row affected (0.01 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from emp;
++------+--------+---------+------+---------------------+---------+
+| eid  | ename  | esalary | eage | hiredate            | job     |
++------+--------+---------+------+---------------------+---------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | clerk   |
+|  102 | Neeraj |   20000 |   22 | 1990-12-17 00:00:00 | manager |
++------+--------+---------+------+---------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select avg(esalary) from emp group by job having job='manager';
++--------------+
+| avg(esalary) |
++--------------+
+|        15000 |
++--------------+
+1 row in set (0.00 sec)
+
+mysql> select max(esalary)-min(esalary) from emp ;
++---------------------------+
+| max(esalary)-min(esalary) |
++---------------------------+
+|                     14000 |
++---------------------------+
+1 row in set (0.00 sec)
+
+mysql> select max(esalary)-min(esalary) as diff from emp ;
++-------+
+| diff  |
++-------+
+| 14000 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp;
++------+--------+---------+------+---------------------+---------+
+| eid  | ename  | esalary | eage | hiredate            | job     |
++------+--------+---------+------+---------------------+---------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | clerk   |
+|  102 | Neeraj |   20000 |   22 | 1990-12-17 00:00:00 | manager |
++------+--------+---------+------+---------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> select max(esalary) as diff from emp ;
++-------+
+| diff  |
++-------+
+| 24000 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select min(esalary) as diff from emp ;
++-------+
+| diff  |
++-------+
+| 10000 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select max(esalary)-min(esalary) as diff from emp ;
++-------+
+| diff  |
++-------+
+| 14000 |
++-------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp;
++------+--------+---------+------+---------------------+---------+
+| eid  | ename  | esalary | eage | hiredate            | job     |
++------+--------+---------+------+---------------------+---------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | clerk   |
+|  102 | Neeraj |   20000 |   22 | 1990-12-17 00:00:00 | manager |
++------+--------+---------+------+---------------------+---------+
+3 rows in set (0.00 sec)
+
+mysql> alter table emp add comission;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 1
+mysql> alter table emp add comission double;
+Query OK, 0 rows affected (0.01 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from emp;
++------+--------+---------+------+---------------------+---------+-----------+
+| eid  | ename  | esalary | eage | hiredate            | job     | comission |
++------+--------+---------+------+---------------------+---------+-----------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager |      NULL |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | clerk   |      NULL |
+|  102 | Neeraj |   20000 |   22 | 1990-12-17 00:00:00 | manager |      NULL |
++------+--------+---------+------+---------------------+---------+-----------+
+3 rows in set (0.00 sec)
+
+mysql> alter table emp change comission commission double;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> insert into emp(eid,ename,eage,commision) values(104,'aman',21,50000);
+ERROR 1054 (42S22): Unknown column 'commision' in 'field list'
+mysql> insert into emp(eid,ename,eage,commission) values(104,'aman',21,50000);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select count(*) from emp where job is null and commission=50000;
++----------+
+| count(*) |
++----------+
+|        1 |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp;
++------+--------+---------+------+---------------------+---------+------------+
+| eid  | ename  | esalary | eage | hiredate            | job     | commission |
++------+--------+---------+------+---------------------+---------+------------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager |       NULL |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | clerk   |       NULL |
+|  102 | Neeraj |   20000 |   22 | 1990-12-17 00:00:00 | manager |       NULL |
+|  104 | aman   |    NULL |   21 | NULL                | NULL    |      50000 |
++------+--------+---------+------+---------------------+---------+------------+
+4 rows in set (0.00 sec)
+
+mysql> create table emp_info(empno int,ename varchar(20),job varchar(20),mgr int,deptno int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc emp_info;
++--------+-------------+------+-----+---------+-------+
+| Field  | Type        | Null | Key | Default | Extra |
++--------+-------------+------+-----+---------+-------+
+| empno  | int         | YES  |     | NULL    |       |
+| ename  | varchar(20) | YES  |     | NULL    |       |
+| job    | varchar(20) | YES  |     | NULL    |       |
+| mgr    | int         | YES  |     | NULL    |       |
+| deptno | int         | YES  |     | NULL    |       |
++--------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> create table dept(deptno int, dname varchar(20),loc varchar(10));
+Query OK, 0 rows affected (0.04 sec)
+
+mysql> insert into emp1 values(111,'lokesh','analyst',444,10);
+ERROR 1146 (42S02): Table 'jdbc_ankit.emp1' doesn't exist
+mysql> insert into emp_info values(111,'lokesh','analyst',444,10);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_info values(222,'mayur','clerk',333,20);
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  insert into emp1 values(333,'jayant','manager',111,30);
+ERROR 1146 (42S02): Table 'jdbc_ankit.emp1' doesn't exist
+mysql>  insert into emp_info values(333,'jayant','manager',111,30);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into emp_info values(444,'shivam','engineer',222,40);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept values(10,'inventory','hydrabad');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into dept values(20,'finance','banglore');
+Query OK, 1 row affected (0.01 sec)
+
+mysql>  insert into dept values(30,'hr','mumbai');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> select * from emp_info;
++-------+--------+----------+------+--------+
+| empno | ename  | job      | mgr  | deptno |
++-------+--------+----------+------+--------+
+|   111 | lokesh | analyst  |  444 |     10 |
+|   222 | mayur  | clerk    |  333 |     20 |
+|   333 | jayant | manager  |  111 |     30 |
+|   444 | shivam | engineer |  222 |     40 |
++-------+--------+----------+------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+-----------+----------+
+| deptno | dname     | loc      |
++--------+-----------+----------+
+|     10 | inventory | hydrabad |
+|     20 | finance   | banglore |
+|     30 | hr        | mumbai   |
++--------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select empno,ename,job,dname,loc from emp_info e,dept d where e.deptno=d.deptno;
++-------+--------+---------+-----------+----------+
+| empno | ename  | job     | dname     | loc      |
++-------+--------+---------+-----------+----------+
+|   111 | lokesh | analyst | inventory | hydrabad |
+|   222 | mayur  | clerk   | finance   | banglore |
+|   333 | jayant | manager | hr        | mumbai   |
++-------+--------+---------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select empno,ename,job,dname,loc from emp_info e join dept d using(deptno);
++-------+--------+---------+-----------+----------+
+| empno | ename  | job     | dname     | loc      |
++-------+--------+---------+-----------+----------+
+|   111 | lokesh | analyst | inventory | hydrabad |
+|   222 | mayur  | clerk   | finance   | banglore |
+|   333 | jayant | manager | hr        | mumbai   |
++-------+--------+---------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select empno,ename,job,dname,loc from emp_info e join dept d on e.deptno=d.deptno;
++-------+--------+---------+-----------+----------+
+| empno | ename  | job     | dname     | loc      |
++-------+--------+---------+-----------+----------+
+|   111 | lokesh | analyst | inventory | hydrabad |
+|   222 | mayur  | clerk   | finance   | banglore |
+|   333 | jayant | manager | hr        | mumbai   |
++-------+--------+---------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select empno,ename,job,dname,loc from emp_info e join dept d where e.deptno=d.deptno;
++-------+--------+---------+-----------+----------+
+| empno | ename  | job     | dname     | loc      |
++-------+--------+---------+-----------+----------+
+|   111 | lokesh | analyst | inventory | hydrabad |
+|   222 | mayur  | clerk   | finance   | banglore |
+|   333 | jayant | manager | hr        | mumbai   |
++-------+--------+---------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select empno,ename,job,dname,loc from emp_info e join dept d where e.deptno>d.deptno;
++-------+--------+----------+-----------+----------+
+| empno | ename  | job      | dname     | loc      |
++-------+--------+----------+-----------+----------+
+|   222 | mayur  | clerk    | inventory | hydrabad |
+|   333 | jayant | manager  | finance   | banglore |
+|   333 | jayant | manager  | inventory | hydrabad |
+|   444 | shivam | engineer | hr        | mumbai   |
+|   444 | shivam | engineer | finance   | banglore |
+|   444 | shivam | engineer | inventory | hydrabad |
++-------+--------+----------+-----------+----------+
+6 rows in set (0.00 sec)
+
+mysql> select e1.empno,e1.ename,e2.job,e2.deptno from emp_info e1,emp_info e2 where e1.empno=e2.mgr;
++-------+--------+----------+--------+
+| empno | ename  | job      | deptno |
++-------+--------+----------+--------+
+|   444 | shivam | analyst  |     10 |
+|   333 | jayant | clerk    |     20 |
+|   111 | lokesh | manager  |     30 |
+|   222 | mayur  | engineer |     40 |
++-------+--------+----------+--------+
+4 rows in set (0.00 sec)
+
+mysql> select empno,ename,job,dname,loc from emp_info natural join dept;
++-------+--------+---------+-----------+----------+
+| empno | ename  | job     | dname     | loc      |
++-------+--------+---------+-----------+----------+
+|   111 | lokesh | analyst | inventory | hydrabad |
+|   222 | mayur  | clerk   | finance   | banglore |
+|   333 | jayant | manager | hr        | mumbai   |
++-------+--------+---------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from dept;
++--------+-----------+----------+
+| deptno | dname     | loc      |
++--------+-----------+----------+
+|     10 | inventory | hydrabad |
+|     20 | finance   | banglore |
+|     30 | hr        | mumbai   |
++--------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> alter table dept add empno int;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table dept add empno int;
+ERROR 1060 (42S21): Duplicate column name 'empno'
+mysql> select * from dept;
++--------+-----------+----------+-------+
+| deptno | dname     | loc      | empno |
++--------+-----------+----------+-------+
+|     10 | inventory | hydrabad |  NULL |
+|     20 | finance   | banglore |  NULL |
+|     30 | hr        | mumbai   |  NULL |
++--------+-----------+----------+-------+
+3 rows in set (0.00 sec)
+
+mysql> alter table emp drop empno;
+ERROR 1091 (42000): Can't DROP 'empno'; check that column/key exists
+mysql> alter table dept drop empno;
+Query OK, 0 rows affected (0.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from dept;
++--------+-----------+----------+
+| deptno | dname     | loc      |
++--------+-----------+----------+
+|     10 | inventory | hydrabad |
+|     20 | finance   | banglore |
+|     30 | hr        | mumbai   |
++--------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp_info cross join dept;
++-------+--------+----------+------+--------+--------+-----------+----------+
+| empno | ename  | job      | mgr  | deptno | deptno | dname     | loc      |
++-------+--------+----------+------+--------+--------+-----------+----------+
+|   111 | lokesh | analyst  |  444 |     10 |     30 | hr        | mumbai   |
+|   111 | lokesh | analyst  |  444 |     10 |     20 | finance   | banglore |
+|   111 | lokesh | analyst  |  444 |     10 |     10 | inventory | hydrabad |
+|   222 | mayur  | clerk    |  333 |     20 |     30 | hr        | mumbai   |
+|   222 | mayur  | clerk    |  333 |     20 |     20 | finance   | banglore |
+|   222 | mayur  | clerk    |  333 |     20 |     10 | inventory | hydrabad |
+|   333 | jayant | manager  |  111 |     30 |     30 | hr        | mumbai   |
+|   333 | jayant | manager  |  111 |     30 |     20 | finance   | banglore |
+|   333 | jayant | manager  |  111 |     30 |     10 | inventory | hydrabad |
+|   444 | shivam | engineer |  222 |     40 |     30 | hr        | mumbai   |
+|   444 | shivam | engineer |  222 |     40 |     20 | finance   | banglore |
+|   444 | shivam | engineer |  222 |     40 |     10 | inventory | hydrabad |
++-------+--------+----------+------+--------+--------+-----------+----------+
+12 rows in set (0.00 sec)
+
+mysql> select empno,ename,job,dname,loc from emp_info left join dept using(deptno);
++-------+--------+----------+-----------+----------+
+| empno | ename  | job      | dname     | loc      |
++-------+--------+----------+-----------+----------+
+|   111 | lokesh | analyst  | inventory | hydrabad |
+|   222 | mayur  | clerk    | finance   | banglore |
+|   333 | jayant | manager  | hr        | mumbai   |
+|   444 | shivam | engineer | NULL      | NULL     |
++-------+--------+----------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp_info left join dept using(deptno);
++--------+-------+--------+----------+------+-----------+----------+
+| deptno | empno | ename  | job      | mgr  | dname     | loc      |
++--------+-------+--------+----------+------+-----------+----------+
+|     10 |   111 | lokesh | analyst  |  444 | inventory | hydrabad |
+|     20 |   222 | mayur  | clerk    |  333 | finance   | banglore |
+|     30 |   333 | jayant | manager  |  111 | hr        | mumbai   |
+|     40 |   444 | shivam | engineer |  222 | NULL      | NULL     |
++--------+-------+--------+----------+------+-----------+----------+
+4 rows in set (0.00 sec)
+
+mysql> select * from emp_info right join dept using(deptno);
++--------+-----------+----------+-------+--------+---------+------+
+| deptno | dname     | loc      | empno | ename  | job     | mgr  |
++--------+-----------+----------+-------+--------+---------+------+
+|     10 | inventory | hydrabad |   111 | lokesh | analyst |  444 |
+|     20 | finance   | banglore |   222 | mayur  | clerk   |  333 |
+|     30 | hr        | mumbai   |   333 | jayant | manager |  111 |
++--------+-----------+----------+-------+--------+---------+------+
+3 rows in set (0.00 sec)
+
+mysql> select * from emp_info full join dept using(deptno);
++--------+-------+--------+---------+------+-----------+----------+
+| deptno | empno | ename  | job     | mgr  | dname     | loc      |
++--------+-------+--------+---------+------+-----------+----------+
+|     10 |   111 | lokesh | analyst |  444 | inventory | hydrabad |
+|     20 |   222 | mayur  | clerk   |  333 | finance   | banglore |
+|     30 |   333 | jayant | manager |  111 | hr        | mumbai   |
++--------+-------+--------+---------+------+-----------+----------+
+3 rows in set (0.00 sec)
+
+mysql> select count( distinct dname) from dept;
++------------------------+
+| count( distinct dname) |
++------------------------+
+|                      3 |
++------------------------+
+1 row in set (0.00 sec)
+
+mysql>

@@ -1,0 +1,82 @@
+		Docker Commands
+
+1. docker pull <image_name>
+
+Pull's docker Image From Docker Hub to local Environment
+
+
+2. docker run
+
+ a) docker run = docker start + docker pull
+ b) docker run -d <image_id or <image_name>
+    Run the container in detach mode
+ c) docker run -p <host_port>:<container_port>
+    allows you to bind the port of the host to container
+ d) docker run --name <name>
+    To provide the name of container.
+
+
+3. docker start <container_id or container_name>
+starts the container
+
+
+4. docker stop <container_id or container_name>
+stops the container
+
+
+5. a) docker ps
+   gives the details of only running container
+   b) docker ps -a
+   gives the details of the containers.
+
+
+6. docker images 
+   gives the details of images
+
+
+7. a) docker logs <container_id or container_name>
+   To check the logs of image
+   b) docker logs <container_id or container_name> -f
+      To stream the logs
+   c) docker logs <container_id or container_name> | tail
+      To t
+
+
+8. docker exec -it <container_id or container_name> /bin/bash
+   To get the terminal of running container   
+
+# To check docker networks 
+docker network ls
+
+## Create docker network
+docker network create mongo—network
+
+#start mongodb
+
+docker run —d \
+-p 27017:27017 \
+-e MONGO_INITDB_ROOT_USERNAME=admin \
+-e MONGO_INITDB_ROOT_PASSWORD=password \
+-net mongo-network \
+—name mongodb \
+mongo
+
+#start mongo—express
+docker run —d \
+-p 8081:8081\
+-e ME_CONFIG_MONGODB_ADMINUSERNAME=admin \
+-e ME_CONFIG_MONGODB_ADMINPASSWORD=password \
+-e ME_CONFIG_MONGODB_SERVER=mongodb \
+-net mongo-network \
+—name mongodb \
+mongo-express
+
+
+1. docker run -d -p 27017:27017 -e MONGO_INITDB_ROOT_USERNAME=admin -e MONGO_INITDB_ROOT_PASSWORD=password --net mongo-network --name mongodb mongo
+
+2. docker run -d -p 8081:8081 -e ME_CONFIG_MONGODB_ADMINUSERNAME=admin -e ME_CONFIG_MONGODB_ADMINPASSWORD=password -e ME_CONFIG_MONGODB_SERVER=mongodb --net mongo-network --name mongodb mongo-express
+
+#Docker compose
+ 
+ docker-compose -f <file_path> up/down
+ to run multiple images in compose

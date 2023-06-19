@@ -1,0 +1,19 @@
+class sample{
+
+public static void main(String[] args){
+
+	LinkedList<String> linkedlist=new LinkedList();
+	
+	linkedlist.get(linkedlist.size()-3);
+
+}
+
+}
+
+
+for i=0 to i=length of linkedlist
+	node=linkedlist[i+3]
+	node.next!=null
+	
+
+	

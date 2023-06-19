@@ -1,0 +1,506 @@
+Enter password: ****
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 308
+Server version: 8.0.30 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> create table new (id int primary key,name varchar(20));
+ERROR 1046 (3D000): No database selected
+mysql> use jdbc_ankit;
+Database changed
+mysql> create table new (id int primary key,name varchar(20));
+ERROR 1050 (42S01): Table 'new' already exists
+mysql> drop table new;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table new (id int primary key,name varchar(20));
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> insert into new values(1,'rahul');
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into new values(1,'yash');
+ERROR 1062 (23000): Duplicate entry '1' for key 'new.PRIMARY'
+mysql> drop table new;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table parent (eid int primary key,ename varchar(20),age int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table child(mgrid int,deptno int,foreign key(mgrid) references parent(eid));
+Query OK, 0 rows affected (0.05 sec)
+
+mysql> insert into parent values(1,'ankit');
+ERROR 1136 (21S01): Column count doesn't match value count at row 1
+mysql> insert into parent values(1,'ankit',22);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into parent values(2,'neeraj',22);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into child values(1,23);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into child values(3,23);
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`jdbc_ankit`.`child`, CONSTRAINT `child_ibfk_1` FOREIGN KEY (`mgrid`) REFERENCES `parent` (`eid`))
+mysql> insert into parent values(3,'lll',23);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> insert into child values(3,23);
+Query OK, 1 row affected (0.01 sec)
+
+mysql> delete from parent where eid=1;
+ERROR 1451 (23000): Cannot delete or update a parent row: a foreign key constraint fails (`jdbc_ankit`.`child`, CONSTRAINT `child_ibfk_1` FOREIGN KEY (`mgrid`) REFERENCES `parent` (`eid`))
+mysql> create table player(playerid int primary key,playername varchar(20) not null,ranking int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> create table tournament (tournamentid int primary key, name varchar(30),startdate date,enddate date,prize int);
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> drop table tournament;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table tournament (tournamentid int primary key, name varchar(30) not null,startdate date not null,enddate date not null,prize int not null);
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create table match(mid int,tournamentid int,player1 int , player2 int,matchdate date not null,winner int, score varchar(30) not null,foreign key (tournamentid) references tournament(tournamentid),primary key(mid,tournamentid),foreign key(player1) references player(playerid),foreign key(player2) references player(playerid),foreign key(winner) references player(playerid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'match(mid int,tournamentid int,player1 int , player2 int,matchdate date not null' at line 1
+mysql> create table match(mid int,tournamentid int,player1 int , player2 int,matchdate date not null,winner int, score varchar(30) not null,foreign key (tournamentid) references tournament(tournamentid),primary key(mid,tournamentid),foreign key(player1) references player(playerid),foreign key(player2) references player(playerid),foreign key(winner) references player(playerid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'match(mid int,tournamentid int,player1 int , player2 int,matchdate date not null' at line 1
+mysql> create table match(mid int,tournamentid int,player1 int , player2 int,matchdate date,winner int, score varchar(30) not null,foreign key (tournamentid) references tournament(tournamentid),primary key(mid,tournamentid),foreign key(player1) references player(playerid),foreign key(player2) references player(playerid),foreign key(winner) references player(playerid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'match(mid int,tournamentid int,player1 int , player2 int,matchdate date,winner i' at line 1
+mysql> create table Match(mid int,tournamentid int,player1 int , player2 int,matchdate date not null,winner int, score varchar(30) not null,foreign key (tournamentid) references tournament(tournamentid),primary key(mid,tournamentid),foreign key(player1) references player(playerid),foreign key(player2) references player(playerid),foreign key(winner) references player(playerid));
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Match(mid int,tournamentid int,player1 int , player2 int,matchdate date not null' at line 1
+mysql> create table Matchs(mid int,tournamentid int,player1 int , player2 int,matchdate date not null,winner int, score varchar(30) not null,foreign key (tournamentid) references tournament(tournamentid),primary key(mid,tournamentid),foreign key(player1) references player(playerid),foreign key(player2) references player(playerid),foreign key(winner) references player(playerid));
+Query OK, 0 rows affected (0.07 sec)
+
+mysql> desc matchs;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| mid          | int         | NO   | PRI | NULL    |       |
+| tournamentid | int         | NO   | PRI | NULL    |       |
+| player1      | int         | YES  | MUL | NULL    |       |
+| player2      | int         | YES  | MUL | NULL    |       |
+| matchdate    | date        | NO   |     | NULL    |       |
+| winner       | int         | YES  | MUL | NULL    |       |
+| score        | varchar(30) | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> create table Matchs(mid int,tournamentid int,player1 int , player2 int,matchdate date not null,winner int, score varchar(30) not null,foreign key (tournamentid) references tournament(tournamentid),primary key(mid,tournamentid),foreign key(player1) references player(playerid),foreign key(player2) references player(playerid),foreign key(winner) references player(playerid));
+ERROR 1050 (42S01): Table 'matchs' already exists
+mysql> create table Match1(mid int,tournamentid int,player1 int , player2 int check(player2!=player2),matchdate date not null,winner int, score varchar(30) not null,foreign key (tournamentid) references tournament(tournamentid),primary key(mid,tournamentid),foreign key(player1) references player(playerid),foreign key(player2) references player(playerid),foreign key(winner) references player(playerid));
+Query OK, 0 rows affected (0.08 sec)
+
+mysql> desc match1;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| mid          | int         | NO   | PRI | NULL    |       |
+| tournamentid | int         | NO   | PRI | NULL    |       |
+| player1      | int         | YES  | MUL | NULL    |       |
+| player2      | int         | YES  | MUL | NULL    |       |
+| matchdate    | date        | NO   |     | NULL    |       |
+| winner       | int         | YES  | MUL | NULL    |       |
+| score        | varchar(30) | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.01 sec)
+
+mysql> drop table matchs;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> desc matchs;
+ERROR 1146 (42S02): Table 'jdbc_ankit.matchs' doesn't exist
+mysql> desc match1;
++--------------+-------------+------+-----+---------+-------+
+| Field        | Type        | Null | Key | Default | Extra |
++--------------+-------------+------+-----+---------+-------+
+| mid          | int         | NO   | PRI | NULL    |       |
+| tournamentid | int         | NO   | PRI | NULL    |       |
+| player1      | int         | YES  | MUL | NULL    |       |
+| player2      | int         | YES  | MUL | NULL    |       |
+| matchdate    | date        | NO   |     | NULL    |       |
+| winner       | int         | YES  | MUL | NULL    |       |
+| score        | varchar(30) | NO   |     | NULL    |       |
++--------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> delimiter//
+    -> create procedure emp()
+    -> begin
+    -> desc match1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimiter//create procedure emp()
+begin
+desc match1' at line 1
+mysql> delimiter//
+    -> create procedure emp()
+    -> begin
+    -> desc match1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimiter//create procedure emp()
+begin
+desc match1' at line 1
+mysql> delimiter//
+    -> create procedure emp()
+    -> begin
+    -> desc match1
+    -> end;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimiter//create procedure emp()
+begin
+desc match1
+end' at line 1
+mysql> delimiter//
+    -> create procedure emp()
+    -> begin
+    -> desc match1
+    -> end
+    -> //
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimiter//create procedure emp()
+begin
+desc match1
+end
+//' at line 1
+mysql> delimiter//
+    -> create procedure emp()
+    -> begin
+    -> desc match1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimiter//create procedure emp()
+begin
+desc match1' at line 1
+mysql> delimeter//
+    -> create procedure emp()
+    -> begin
+    -> desc match1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimeter//
+create procedure emp()
+begin
+desc match1' at line 1
+mysql> create procedure emp()
+    -> begin
+    -> desc match1;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> create procedure emp()
+    -> begin
+    -> desc match1
+    -> end
+    -> //
+    -> //
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '//
+//' at line 5
+mysql> delimeter //
+    -> create procedure emp()
+    -> begin
+    -> select * from emp_info
+    -> end
+    -> //
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimeter //
+create procedure emp()
+begin
+select * from emp_info
+end
+//' at line 1
+mysql> create procedure emp()
+    -> begin
+    -> select * from emp_info;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 3
+mysql> delimeter //
+    -> create procedure emp()
+    -> begin
+    -> select * from emp_info;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'delimeter //
+create procedure emp()
+begin
+select * from emp_info' at line 1
+mysql> begin
+    -> ;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> delimiter //
+mysql> create procedure emp()
+    -> begin
+    -> select * from emp_info;
+    -> end
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call emp;
+    -> //
++-------+--------+----------+------+--------+--------+
+| empno | ename  | job      | mgr  | deptno | salary |
++-------+--------+----------+------+--------+--------+
+|   111 | lokesh | analyst  |  444 |     10 |  20000 |
+|   222 | mayur  | clerk    |  333 |     20 |  11000 |
+|   333 | jayant | manager  |  111 |     10 |  19200 |
+|   444 | shivam | engineer |  222 |     40 |  24000 |
+|   555 | neeraj | clerk    |  333 |     20 |  34000 |
++-------+--------+----------+------+--------+--------+
+5 rows in set (0.01 sec)
+
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> create procedure pr1(in sal int)
+    -> begin
+    -> select eid, ename from emp where esalary=sal;
+    -> end
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call pr1(20000);
+    -> //
++------+--------+
+| eid  | ename  |
++------+--------+
+|  102 | Neeraj |
++------+--------+
+1 row in set (0.00 sec)
+
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create procedure pr1(in sal int,out cnt int)
+    -> begin
+    -> select count(*) into  cnt from emp where esalary=cnt;
+    -> end;
+    -> //
+ERROR 1304 (42000): PROCEDURE pr1 already exists
+mysql> call pr1(20000,@c)
+    -> //
+ERROR 1318 (42000): Incorrect number of arguments for PROCEDURE jdbc_ankit.pr1; expected 1, got 2
+mysql> create procedure pr1(in sal int,out cnt int)
+    -> begin
+    -> select count(*) into  cnt from emp where esalary=cnt;
+    -> end
+    -> //
+ERROR 1304 (42000): PROCEDURE pr1 already exists
+mysql> drop procedure pr1;
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create procedure pr1(in sal int,out cnt int)
+    -> begin
+    -> select count(*) into  cnt from emp where esalary=cnt;
+    -> end
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call pr1(20000,@c)
+    -> //
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @c //
++------+
+| @c   |
++------+
+|    0 |
++------+
+1 row in set (0.00 sec)
+
+mysql> select * from emp;
+    -> //
++------+--------+---------+------+---------------------+----------+------------+
+| eid  | ename  | esalary | eage | hiredate            | job      | commission |
++------+--------+---------+------+---------------------+----------+------------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager  |       NULL |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | clerk    |       NULL |
+|  102 | Neeraj |   20000 |   22 | 2015-02-13 00:00:00 | manager  |       NULL |
+|  104 | aman   |    NULL |   21 | 2015-02-13 00:00:00 | Engineer |      50000 |
++------+--------+---------+------+---------------------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> drop procedure pr1;
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create procedure pr1(in sal int,out cnt int)
+    -> begin
+    -> select count(*) into  cnt from emp where esalary=sal;
+    -> end
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> call pr1(20000,@c)
+    -> //
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @c //
++------+
+| @c   |
++------+
+|    1 |
++------+
+1 row in set (0.00 sec)
+
+mysql> drop procedure pr1;
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> create procedure pr1(inout cnt int)
+    -> begin
+    -> select count(*) into  cnt from emp where esalary=cnt;
+    -> end
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> set @cnt=20000//
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> call pr1//
+ERROR 1318 (42000): Incorrect number of arguments for PROCEDURE jdbc_ankit.pr1; expected 1, got 0
+mysql> call pr1(@cnt)//
+Query OK, 1 row affected (0.00 sec)
+
+mysql> select @cnt//
++------+
+| @cnt |
++------+
+|    1 |
++------+
+1 row in set (0.00 sec)
+
+mysql> desc emp;
+    -> //
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| eid        | int         | YES  |     | NULL    |       |
+| ename      | varchar(20) | YES  |     | NULL    |       |
+| esalary    | double      | YES  |     | NULL    |       |
+| eage       | int         | YES  |     | NULL    |       |
+| hiredate   | datetime    | YES  |     | NULL    |       |
+| job        | varchar(20) | YES  |     | NULL    |       |
+| commission | double      | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> delimiter ;
+mysql> select * from emp;
++------+--------+---------+------+---------------------+----------+------------+
+| eid  | ename  | esalary | eage | hiredate            | job      | commission |
++------+--------+---------+------+---------------------+----------+------------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager  |       NULL |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | clerk    |       NULL |
+|  102 | Neeraj |   20000 |   22 | 2015-02-13 00:00:00 | manager  |       NULL |
+|  104 | aman   |    NULL |   21 | 2015-02-13 00:00:00 | Engineer |      50000 |
++------+--------+---------+------+---------------------+----------+------------+
+4 rows in set (0.00 sec)
+
+mysql> delimiter <-
+mysql> delimiter done
+mysql> delimiter execute
+mysql> create function fun1(age int)
+    -> returns varchar(20)
+    -> begin
+    -> declare desig varchar(20);
+    -> if age<=25 then
+    -> set desig='developer';
+    -> else
+    -> set desig='none';
+    -> end if;
+    -> return desig;
+    -> end;
+    -> execute
+ERROR 1418 (HY000): This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)
+mysql> create function fun1(age int)
+    -> returns varchar(20)
+    -> begin
+    -> declare desig varchar(20);
+    -> if age<=25 then
+    -> set desig='developer';
+    -> else
+    -> set desig='none';
+    -> end if;
+    -> return desig;
+    -> end
+    -> execute
+ERROR 1418 (HY000): This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)
+mysql> delimiter //
+mysql>  create function fun1(age int)
+    ->     -> returns varchar(20)
+    ->     -> begin
+    ->     -> declare desig varchar(20);
+    ->     -> if age<=25 then
+    ->     -> set desig='developer';
+    ->     -> else
+    ->     -> set desig='none';
+    ->     -> end if;
+    ->     -> return desig;
+    ->     -> end;
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> returns varchar(20)
+    -> begin
+    -> declare desig varchar(20);
+    -> if ' at line 2
+mysql> create function fun1(age int)
+    -> returns varchar(20)
+    -> begin
+    -> declare desig varchar(20);
+    -> if age<=25 then
+    -> set desig='developer';
+    -> else
+    -> set desig='none';
+    -> end if;
+    -> return desig;
+    -> end
+    -> ;
+    -> //
+ERROR 1418 (HY000): This function has none of DETERMINISTIC, NO SQL, or READS SQL DATA in its declaration and binary logging is enabled (you *might* want to use the less safe log_bin_trust_function_creators variable)
+mysql> create function fun1(age int)
+    -> returns varchar(20)
+    -> begin
+    -> declare desig varchar(20);
+    -> //
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '' at line 4
+mysql> create function fun1(age int)
+    -> returns varchar(20)
+    -> deterministic
+    -> begin
+    -> declare desig varchar(20);
+    -> if age<=25 then
+    -> set desig='developer';
+    -> else
+    -> set desig='none';
+    -> end if;
+    -> return desig;
+    -> end
+    -> ;
+    -> //
+Query OK, 0 rows affected (0.01 sec)
+
+mysql> select fun1(23)//
++-----------+
+| fun1(23)  |
++-----------+
+| developer |
++-----------+
+1 row in set (0.00 sec)
+
+mysql> select fun1(26)//
++----------+
+| fun1(26) |
++----------+
+| none     |
++----------+
+1 row in set (0.00 sec)
+
+mysql> select *,fun1(eage) from emp;
+    -> //
++------+--------+---------+------+---------------------+----------+------------+------------+
+| eid  | ename  | esalary | eage | hiredate            | job      | commission | fun1(eage) |
++------+--------+---------+------+---------------------+----------+------------+------------+
+|  101 | ankit  |   10000 |   22 | 1980-12-17 00:00:00 | manager  |       NULL | developer  |
+|  103 | lokesh |   24000 |   22 | 1990-12-17 00:00:00 | clerk    |       NULL | developer  |
+|  102 | Neeraj |   20000 |   22 | 2015-02-13 00:00:00 | manager  |       NULL | developer  |
+|  104 | aman   |    NULL |   21 | 2015-02-13 00:00:00 | Engineer |      50000 | developer  |
++------+--------+---------+------+---------------------+----------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql>

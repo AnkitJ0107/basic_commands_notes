@@ -1,0 +1,22 @@
+
+
+1. To create new project
+ng new <Project_name>
+
+2. To create new component
+ng g c <component_name>
+
+3. To run project 
+ng serve
+OR
+ng s 
+OR 
+change the command in the package.json file
+
+4. To Create module 
+ng g m <Module_name>
+
+5. To Create Service
+ng g guard <guard_name>
+
+
